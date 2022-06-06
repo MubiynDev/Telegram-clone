@@ -122,6 +122,7 @@ p, span{
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
+    padding-bottom: 70px;
 
 }
 

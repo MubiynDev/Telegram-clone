@@ -116,7 +116,7 @@ let DATA = {
                 },
                 {
                     id: 3,
-                    is_from_me: false,
+                    is_from_me: true,
                     text: "How are you ?",
                     time: new Date(2022, 6, 2, 11, 10, 05).getTime()
                 },
@@ -224,7 +224,7 @@ let weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const renderLists = () => {
    DATA.chats.forEach((item, index) => {
        let newList = `
-       <li class="chats-item" id="${item.id}" username="${item.user_name}">
+       <li class="chats-item" id="${item.id}">
                     <img src="${item.avatar}"  alt="" class="avatar rounded-circle float-start me-2">
                     <div class="chat-container d-flex align-items-center justify-content-between">
                         <h5 class="user-name">${item.first_name + ' ' + item.last_name}</h5>
@@ -275,11 +275,12 @@ const renderChats = () => {
                       document.querySelector('.chats-content-body').innerHTML = ""
 
                       i.messages.forEach(message => {
+                          
                         document.querySelector('.chats-content-body').innerHTML += `
                         <div class="${message.is_from_me ? "from-me" : "messages" }">
                             <p class="message-item"> ${message.text}
                                <div class="msg-info ">
-                                 <span class="is-checked bi bi-check-all"></span>
+                                 <span class="${message.is_from_me ? "is-checked bi bi-check-all" : "is-checked "}"></span>
                                  <span class="send-time">${new Date(message.time).getHours()}:${new Date(message.time).getMinutes()}</span>
                                </div>
                             </p>
@@ -312,14 +313,45 @@ const renderChats = () => {
                    
 
         document.querySelector('.sender-icon').addEventListener('click',() => {
+            let newMsg = {
+                id: parsedData.chats.length,
+                is_from_me: true,
+                text: inputMessage.value,
+                time: new Date().getTime()
+            }
+
+            if(inputMessage.value){
+                i.messages.push(newMsg)
+
+
+            document.querySelector('.chats-content-body').innerHTML += `
+                        <div class="from-me">
+                            <p class="message-item"> ${newMsg.text}
+                               <div class="msg-info ">
+                                 <span class="is-checked bi bi-check-all"></span>
+                                 <span class="send-time">${new Date(newMsg.time).getHours()}:${new Date(newMsg.time).getMinutes()}</span>
+                               </div>
+                            </p>
+                        </div>
+                        
+                          ` 
+                          localStorage.setItem("DATA", JSON.stringify(parsedData))
+
+
+            }
+        
+             
+            
+
+            inputMessage.value = ""
+            inputMessage.focus()
+
+
 
         })
-                i.messages.push({
-                        id: parsedData.chats.length,
-                        is_from_me: true,
-                        text: inputMessage.value,
-                        time: new Date().getTime()
-                })
+
+        
+                
 
 
 
@@ -340,17 +372,8 @@ renderChats()
 
 
 
-// const addNewMessage = () => {
-   
-// }
-// addNewMessage()
+
+
+
+
 console.log(parsedData.chats)
-
-
-
-// chat.messages.push({
-//     id: parsedData.chats.length + 1,
-//     is_from_me: true,
-//     text: inputValue,
-//     time: `${new Date().getHours}:${new Date().getMinutes}`
-// })
