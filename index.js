@@ -255,7 +255,7 @@ let weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const renderLists = () => {
    DATA.chats.forEach((item, index) => {
        let newList = `
-       <li class="chats-item" id="${item.id}">
+       <li class="chats-item" id="${item.id}" userName="${item.user_name}">
                     <img src="${item.avatar}"  alt="" class="avatar rounded-circle float-start me-2">
                     <div class="chat-container d-flex align-items-center justify-content-between">
                         <h5 class="user-name">${item.first_name + ' ' + item.last_name}</h5>
@@ -302,7 +302,6 @@ const renderChats = () => {
             parsedData.chats.forEach(i => {
                 
                     if(activeChatID === i.id && i){
-                        console.log(i.id, activeChatID)
 
 
                         
@@ -351,68 +350,10 @@ const renderChats = () => {
                              }
                       })                  
 
-                   
-        renderChats()
-
-        document.querySelector('.sender-icon').addEventListener('click',() => {
-                if(inputMessage.value){
-                    targetChatID = parsedData.chats.find(item => item.id  === activeChatID)
-                if(activeChatID === i.id && targetChatID){
-                    i.messages.push({
-                        id: i.messages[i.messages.length -1].id + 1,
-                        is_from_me: true,
-                        text: inputMessage.value,
-                        time: new Date().getTime()
-                    })
-                    localStorage.setItem("DATA", JSON.stringify(parsedData))
-                }
-                   
-
-    
-                document.querySelector('.chats-content-body').innerHTML += `
-                            <div class="from-me">
-                                <p class="message-item"> ${i.messages[i.messages.length-1].text}
-                                   <div class="msg-info ">
-                                     <span class="is-checked bi bi-check-all"></span>
-                                     <span class="send-time">${new Date(i.messages[i.messages.length-1].time).getHours()}:${new Date(i.messages[i.messages.length-1].time).getMinutes()}</span>
-                                   </div>
-                                </p>
-                            </div>
-                            
-                              ` 
-    
-    
-                
-                }
-            
-        
-             
-            
-
-            inputMessage.value = ""
-            inputMessage.focus()
-            document.querySelector('.sender-icon').classList.remove("bi-send-fill")
-            document.querySelector('.sender-icon').classList.add("bi-mic-fill")
-
-
-
-
-        })
-
-       
-                
-
-
-
-                     
-
-
-
                 }
             })
            
         })       
-        //  console.log(parsedData.chats)
 
     })
     
@@ -422,10 +363,73 @@ const renderChats = () => {
 renderChats()
 
 
+let addNewMessage = () => {
+    let parsedData = JSON.parse(localStorage.getItem("DATA"))
+
+    
+         newChats.forEach(li => {
+             li.addEventListener("click", e => {
+                 targetChatID = e.currentTarget.getAttribute('id') - 0;
+                 targetUsername = e.currentTarget.getAttribute("userName")
+                 activeChatID = parsedData.chats.find(i => i.id === targetChatID - 0).id
+                 console.log(targetChatID,activeChatID, targetUsername)
+                 document.querySelector('.sender-icon').addEventListener("click", () => {
+                   
+                        if(activeChatID === targetChatID){
+                            parsedData.chats.forEach(chat => {
+                                
+                           if(chat.user_name === targetUsername){
+                               if(inputMessage.value){
+                                console.log(true)
+                                chat.messages.push({
+                                    id: chat.messages[chat.messages.length -1].id + 1,
+                                    is_from_me: true,
+                                    text: inputMessage.value,
+                                    time: new Date().getTime()
+                                })
+    
+                                document.querySelector('.chats-content-body').innerHTML += `
+                                 <div class="from-me">
+                                     <p class="message-item"> ${chat.messages[chat.messages.length-1].text}
+                                        <div class="msg-info ">
+                                          <span class="is-checked bi bi-check-all"></span>
+                                          <span class="send-time">${new Date(chat.messages[chat.messages.length-1].time).getHours()}:${new Date(chat.messages[chat.messages.length-1].time).getMinutes()}</span>
+                                        </div>
+                                     </p>
+                                 </div>
+                                
+                                   ` 
+                                   renderChats()
+                               }
+                           
+
+                           } 
+                          
+                        })
+                        }
+                    
 
 
-// addNewMessage()
+                    inputMessage.value = ""
+                    inputMessage.focus()
+                    document.querySelector('.sender-icon').classList.remove("bi-send-fill")
+                    document.querySelector('.sender-icon').classList.add("bi-mic-fill")
+                    localStorage.setItem("DATA", JSON.stringify(parsedData))
 
+                 })
+             })
+         })
+
+         console.log(parsedData.chats)
+
+         
+
+    
+}
+
+
+
+addNewMessage()
 
 
 //------------------------ modals ------------------
