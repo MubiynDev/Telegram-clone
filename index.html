@@ -19,7 +19,7 @@
         <div class="chats">
             <div class="chats-nav">
                 <button class="menu  bi bi-list"></button>
-                <input type="text"  placeholder="Search">
+                <input type="text" class="main-search"  placeholder="Search">
             </div>
             <ul class="chats-ul">
             </ul>
@@ -37,8 +37,8 @@
                    </div>
                 </div>
                 <div class="chat-buttons">
-                    <span class="bi bi-search" style="font-size: 18px;"></span>
-                    <span class="bi bi-three-dots-vertical ms-3" style="font-size: 20px;"></span>
+                    <span class="bi bi-search chat-search" style="font-size: 18px;"></span>
+                    <span class="bi bi-three-dots-vertical chat-settings ms-3" style="font-size: 20px;"></span>
                 </div>
             </div>
 
@@ -107,46 +107,27 @@
         </div>
 
 
+
+
+
         <div class="user-info-modal">
             <div class="user-info-modal__content">
-                <!-- <div class="chat-info d-flex align-items-center mb-3 px-4">
-                    <img src="https://picsum.photos/50"  alt="" class="avatar avatar2 nav-avatar rounded-circle float-start me-4">
-                   <div class="info-wrapper d-flex flex-column">
-                    <h5 class="username m-0">Lorem Ipsum</h5>
-                    <small class="last-seen text-info">last-seen recently</small>
-                    <span class="bi bi-x"></span>
-                   </div>
-                </div> 
-                
-                <div class="bio-wrapper">
-                    <h7 class="mobile">+998999999991</h7>
-                    <p class="mb-2 text-secondary">Mobile</p>
-                    <h7 class="bio">Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, assumenda.</h7>
-                    <p class="mb-2 text-secondary">Bio</p>
-                    <h7 class="username-modal">@loremiy</h7>
-                    <p class="text-secondary">Username</p>
-                </div>
-
-                <div class="sharing-wrapper">
-                    <ul class="m-0 p-0">
-                        <li class="shared-items "><i class="bi bi-folder2"></i> 8 Files</li>
-                        <li class="shared-items "><i class="bi bi-image"></i> 8 Photos</li>
-                        <li class="shared-items "><i class="bi bi-link"></i> 8 Links</li>
-                        <li class="shared-items"><i class=" bi bi-mic"></i> 8 Voice</li>
-                        
-                    </ul>
-                </div>
-
-                <div class="edition-wrapper">
-                    <ul class="m-0 p-0">
-                        <li class="edition-items"><i class=" bi bi-pencil"></i> Edit Contact</li>
-                        <li class="edition-items"><i class=" bi bi-trash"></i> Delete Contact</li>
-                        <li class="edition-items "><i class="bi bi-shield-slash"></i> Block User</li>
-                    </ul>
-                </div>
-            </div> -->
         </div>
+    </div>
 
+
+
+
+
+    <div class="chat-settings-dropdown">
+      <div class="chat-settings-dropdown__content">
+          <ul class="m-0">
+              <li class="chat-settings-dropdown-item"><span class="bi bi-bell-slash-fill"></span> Mute notifications</li>
+              <li class="chat-settings-dropdown-item"><span class="bi bi-person-circle"></span> View profile</li>
+              <li class="chat-settings-dropdown-item"><span class="bi bi-x-circle-fill"></span> Clear history</li>
+              <li class="chat-settings-dropdown-item text-danger"><span class="bi bi-trash-fill text-danger"></span> Delete chat</li>
+          </ul>
+      </div>
     </div>
 
 

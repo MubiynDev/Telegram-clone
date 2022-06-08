@@ -296,21 +296,20 @@ const renderChats = () => {
         let parsedData = JSON.parse(localStorage.getItem("DATA"))
 
         el.addEventListener('click', e => {
-            // let elID = el.id - 0;
             let activeChatID = e.currentTarget.id - 0;
            
             parsedData.chats.forEach(i => {
                 
                     if(activeChatID === i.id && i){
 
-
-                        
-                    
                       document.querySelector('.chat-info').setAttribute("id", i.id)
                       document.querySelector('.nav-avatar').src = `${i.avatar}`
                       document.querySelector('.username').innerHTML = `${i.first_name} ${i.last_name}`  
                       document.querySelector('.last-seen').innerHTML = `${i.activity}`
-                      
+                      document.querySelectorAll('.chat-settings-dropdown-item').forEach(item => {
+                          item.setAttribute("id", i.id)
+                        })
+                      document.querySelector('.chat-settings-dropdown').setAttribute("id", i.id)
                       document.querySelector('.chats-content-body').innerHTML = ""
 
                       i.messages.forEach(message => {
@@ -348,6 +347,7 @@ const renderChats = () => {
                                 document.querySelector('.sender-icon').classList.add("bi-mic-fill")
                       
                              }
+                             
                       })                  
 
                 }
@@ -372,7 +372,6 @@ let addNewMessage = () => {
                  targetChatID = e.currentTarget.getAttribute('id') - 0;
                  targetUsername = e.currentTarget.getAttribute("userName")
                  activeChatID = parsedData.chats.find(i => i.id === targetChatID - 0).id
-                 console.log(targetChatID,activeChatID, targetUsername)
                  document.querySelector('.sender-icon').addEventListener("click", () => {
                    
                         if(activeChatID === targetChatID){
@@ -380,13 +379,13 @@ let addNewMessage = () => {
                                 
                            if(chat.user_name === targetUsername){
                                if(inputMessage.value){
-                                console.log(true)
                                 chat.messages.push({
                                     id: chat.messages[chat.messages.length -1].id + 1,
                                     is_from_me: true,
                                     text: inputMessage.value,
                                     time: new Date().getTime()
                                 })
+
     
                                 document.querySelector('.chats-content-body').innerHTML += `
                                  <div class="from-me">
@@ -399,7 +398,6 @@ let addNewMessage = () => {
                                  </div>
                                 
                                    ` 
-                                   renderChats()
                                }
                            
 
@@ -417,6 +415,8 @@ let addNewMessage = () => {
                     localStorage.setItem("DATA", JSON.stringify(parsedData))
 
                  })
+                 renderChats()
+
              })
          })
 
@@ -433,16 +433,21 @@ addNewMessage()
 
 
 //------------------------ modals ------------------
+let modalCloser = (target) => {
+    window.addEventListener('click', e => {
+        if(e.target.classList == target.classList){
+         target.style.display = "none"
+        }
+    })
+}
+
 
 let showSidebar = () => {
     document.querySelector('.menu').addEventListener('click', (e) => {
         document.querySelector('.sidebar-modal').style.display = "block"
     
-       window.addEventListener('click', e => {
-           if(e.target.classList == 'sidebar-modal'){
-            document.querySelector('.sidebar-modal').style.display = "none"
-           }
-       })
+       modalCloser(document.querySelector('.sidebar-modal'))
+
        document.querySelector('.sidebar-img').src = `${DATA.chats[DATA.chats.length-1].avatar}`
        document.querySelector('.myname').innerHTML = `${DATA.chats[DATA.chats.length-1].first_name} ${DATA.chats[DATA.chats.length-1].last_name}`
        document.querySelector('.mynumber').innerHTML = `${DATA.chats[DATA.chats.length-1].phone_number}`
@@ -452,6 +457,8 @@ let showSidebar = () => {
     })
 }
 showSidebar()
+
+
 
 let showUserInfo = () => {
 
@@ -523,14 +530,40 @@ let showUserInfo = () => {
     
     })
 
-    window.addEventListener('click', e => {
-        if(e.target.classList == 'user-info-modal'){
-         document.querySelector('.user-info-modal').style.display = "none"
-        }
-    })
+    
+    modalCloser(document.querySelector('.user-info-modal'))
 }
 showUserInfo()
 
 
+let showChatInfoDropdown = () => {
+    document.querySelector('.chat-settings').addEventListener('click', () => {
+        document.querySelector('.chat-settings-dropdown').style.display = "block"
+    })
+
+    modalCloser(document.querySelector('.chat-settings-dropdown'))
+}
+showChatInfoDropdown()
 
 
+
+
+
+// search filter ----------------------------------
+
+document.querySelector('.main-search').addEventListener("keyup", () => {
+   let searchValue = document.querySelector('.main-search').value
+   searchValue = searchValue.toLocaleLowerCase()
+   newChats.forEach(chat => {
+       if(!chat.textContent.toLocaleLowerCase().includes(searchValue)){
+           chat.style.display = "none"
+       }else{
+        chat.style.display = "block"
+
+       }
+   })
+})
+
+document.querySelector('.chat-search').addEventListener('click', () => {
+    document.querySelector('.main-search').focus()
+})

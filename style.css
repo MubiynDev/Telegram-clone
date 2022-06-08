@@ -50,7 +50,7 @@ p, span{
     display: flex;
     justify-content: space-between;
     padding: 10px 20px;
-    border-bottom: 1px solid gray;
+    border-bottom: 0.1px solid rgba(13, 13, 13, 0.306);
 }
 
 .chats-nav .menu{
@@ -60,13 +60,13 @@ p, span{
 }
 .chats-nav input{
     width: 90%;
-    background-color: rgb(47, 60, 70);
+    background-color: rgba(61, 67, 71, 0.173);
     border: 0;
     border-radius: 5px;
     padding: 0 5px;
 }
 .chats-nav input:focus{
-    outline: none !important;
+    outline: 1px solid rgba(228, 221, 221, 0.63);
     color: #fff
 }
 .chats-ul{
@@ -109,7 +109,7 @@ p, span{
     display: flex;
     justify-content: space-between;
     padding: 10px 20px;
-    border-bottom: 1px solid gray;
+    border-bottom: 0.1px solid rgba(13, 13, 13, 0.306);
 }
 .chat-info{
     width: 80%;
@@ -223,7 +223,10 @@ p, span{
     max-width: 60%;
     margin-bottom: 10px;
 }
-
+.chat-search,
+.chat-settings{
+    cursor: pointer;
+}
 
 .sidebar-modal{
     position: fixed;
@@ -350,4 +353,43 @@ p, span{
     position: absolute;
     top: 0%;
     right: 4%;
+}
+
+.chat-settings-dropdown{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color:#64666908;
+    z-index: 0;
+    display: none;
+}
+
+.chat-settings-dropdown__content{
+    position: absolute;
+    right: 2%;
+    top: 8%;
+    background:rgb(33, 42, 52);
+    color: #ccc;
+    font-size: 14px;
+    width: 15%;
+    padding: 15px 0;
+    border-radius: 10px;
+}
+.chat-settings-dropdown-item{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px;
+    cursor: pointer;
+    margin: 0 auto;
+}
+.chat-settings-dropdown-item:hover{
+    background-color:#363d45
+}
+.chat-settings-dropdown__content span{
+    font-size: 18px;
+    margin: 0 12px;
 }
